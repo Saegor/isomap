@@ -7,6 +7,7 @@ end
 
 function input_stream(dt)
 
+	-- stabilize dt
 	local dt = dt < .1 and dt or .1
 
 	if ke.isDown("r")
@@ -67,6 +68,7 @@ function input_keypressed(k)
 		love.event.quit()
 	end
 
+	-- set camera var to default
 	if k == "f" then
 
 		factor_w,
@@ -89,11 +91,11 @@ function input_keypressed(k)
 	
 	if k == "j" then
 	
-		map = map_rotate()
+		map_rotate()
 	end
 
 	if k == "k" then
 	
-		map = map_rotate(true)
+		map_rotate(true)
 	end	
 end

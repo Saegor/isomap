@@ -3,13 +3,10 @@ function engine_init()
 	-- set background
 	gr.setBackgroundColor(hsl(unpack(colors.sky)))
 
-	-- set font size
-	gr.setFont(gr.newFont(16))
-
 	-- set tile size
 	base_w = 0x20 --* math.sqrt(3)/2
 	base_h = 0x10
-	base_z = 0x10
+	base_z = 0x20
 
 	tile_update()
 	
@@ -27,11 +24,21 @@ end
 function engine_run()
 
 	for gz in ipairs(map) do
-				
-		for gy in ipairs(map[gz]) do
 
-			for gx, v in pairs(map[gz][gy]) do
-				
+--NEW ROTATION
+		local min_Y = map_X == 1 and 1 or #map[gz]
+		local max_Y = map_X == -1 and 1 or #map[gz]
+
+		for gy = min_Y, max_Y, map_X do
+
+			local min_X = map_Y == 1 and 1 or #map[gz][gy]
+			local max_X = map_Y == -1 and 1 or #map[gz][gy]
+
+			for gx = min_X, max_X, map_Y do
+
+				v = map[gz][gy][gx]
+--NEW ROTATION
+
 				block_draw(gx, gy, gz, v)
 			end
 		end
@@ -76,20 +83,20 @@ function rhombi(x, y)
 
 	return
 	
-	x + tile_w, y + tile_z,
-	x, y + tile_h + tile_z,
-	x - tile_w, y + tile_z,
-	x, y - tile_h + tile_z,
+	x + tile_w, y + tile_z/2,
+	x, y + tile_h + tile_z/2,
+	x - tile_w, y + tile_z/2,
+	x, y - tile_h + tile_z/2,
 	
-	x + tile_w, y - tile_z,
-	x, y + tile_h - tile_z,
-	x - tile_w, y - tile_z,
-	x, y - tile_h - tile_z
+	x + tile_w, y - tile_z/2,
+	x, y + tile_h - tile_z/2,
+	x - tile_w, y - tile_z/2,
+	x, y - tile_h - tile_z/2
 end
 
 function offset(x, y)
 
-	-- take player location into account
+	-- store player draw coordinates
 	local px, py = axono(
 
 		player.gx,
@@ -104,13 +111,14 @@ function offset(x, y)
 	y + getH/2 - py
 end
 
--- make an axonometry
+-- converse grid coordinates to axonometric draw
 function axono(x, y, z)
 
 	return
-
-	(x - y) * tile_w,
-	(x + y) * tile_h - (z + z) * tile_z
+--NEW ROTATION
+	(map_X * x - map_Y * y) * tile_w,
+	(map_X * y + map_Y * x) * tile_h - z * tile_z
+--NEW ROTATION
 end
 
 -- get draw coordinates
@@ -119,7 +127,7 @@ function block_getVertices(x, y, z)
 	return rhombi(offset(axono(x, y, z)))
 end
 
--- return nil if no value/no row/no column
+-- return v if value, else nil
 function block_getValue(gx, gy, gz)
 
 	return
@@ -129,19 +137,19 @@ function block_getValue(gx, gy, gz)
 	map[gz][gy][gx]
 end
 
--- return false if not transparent
+-- return alpha if transparent, else nil
 function block_getAlpha(v)
 
 	return not v or colors[v][4]
 end
 
--- check if something is on screen
-function onScreen(xa, ya, xb, yb)
+-- return true if something is on screen
+function onScreen(x0, y0, xW, yH)
 
 	return
 
-	xa > 0 and xb < getW and
-	ya > 0 and yb < getH
+	x0 > 0 and xW < getW and
+	y0 > 0 and yH < getH
 end
 
 -- get distance between the player and a block
@@ -151,17 +159,6 @@ function getDist(x, y, z)
 	player.gx - x,
 	player.gy - y,
 	player.gz - z
-	
-	--[[-- TEST sun
-	tx = tx and tx + .0001 or -4
-	ty = ty and ty + .0001 or -4
-	tz = tz or 8
-	
-	local dx, dy, dz =
-	tx - x,
-	ty - y,
-	tz - z
-	--]]-- TEST
 	
 	return math.sqrt(
 	

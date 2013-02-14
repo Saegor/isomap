@@ -34,59 +34,12 @@ function map_load(map_string)
 end
 
 function map_rotate(cw)
-		
-	-- declare a temp map table
-	local map_tmp = {}
 
-	-- for each level
-	for gz in ipairs(map) do
-	
-		-- store the max number or rows
-		local max_dim = math.max(max_dim or 0, #map[gz])
-
-		-- for each row
-		for gy in ipairs(map[gz]) do
-
-			-- store the max number of columns
-			max_dim = math.max(max_dim, #map[gz][gy])
-		end
-
-		-- try to update player location
-		if player.gz == gz then
-
-			player.gx, player.gy =
-			cw and max_dim + 1 - player.gy or player.gy,
-			cw and player.gx or max_dim + 1 - player.gx		
-		end
-	
-		-- make some subtables
-		map_tmp[gz] = {}
-
-		-- for each needed rows
-		for gy = 1, max_dim do
-		
-			-- create a subtable
-			map_tmp[gz][gy] = {}
-		end
-
-		-- for each created rows
-		for gy in ipairs(map[gz]) do
-
-			-- for each cell
-			for gx, v in pairs(map[gz][gy]) do
-
-				-- rotate
-				local gx_rot, gy_rot =
-				cw and max_dim + 1 - gy or gy,
-				cw and gx or max_dim + 1 - gx
-
-				map_tmp[gz][gy_rot][gx_rot] = v
-			end
-		end
-	end
-	
-	-- return rotated map
-	return map_tmp
+--NEW ROTATION
+	map_X, map_Y =
+	cw and map_Y or - map_Y,
+	cw and - map_X or map_X
+--NEW ROTATION
 end
 
 function map_converse(char)

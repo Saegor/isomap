@@ -3,21 +3,21 @@ colors = {
 	empty =
 	{0x00, 0x00, 0x00, 0x00};
 	ground =
-	{0x20, 0x20, 0x80};
+	{0x20, 0x30, 0x60};
 	grass =
-	{0x50, 0x20, 0x80};
+	{0x50, 0x40, 0x70};
 	leaf =
-	{0x60, 0x30, 0x70};
+	{0x60, 0x40, 0x70};
 	stone =
 	{0x00, 0x00, 0x90};
 	water =
-	{0x90, 0x60, 0x60, 0x80};
+	{0x90, 0x70, 0x60, 0x80};
 	wood =
-	{0x28, 0x20, 0x60};
+	{0x28, 0x30, 0x60};
 	sky =
-	{0x88, 0x20, 0x80};
+	{0x80, 0x40, 0x60};
 	player =
-	{0x00, 0x00, 0xA0, 0x80};
+	{0x80, 0x60, 0x60};
 	unknown =
 	{0x00, 0xFF, 0x80, 0x80};
 }
@@ -67,37 +67,13 @@ function hsl(h, s, l)
 	0xFF * (b + m)
 end
 
-function face_setColor(value, angle, dist)
+function face_setColor(value, dist, angle)
 	
-	local h, s, l, a = unpack(colors[value])
+	local h, s, l, alpha = unpack(colors[value])
 
-	--[[-- TEST light aura
-	if dist then
-
-		if angle then
-		angle = angle + (0 - angle)/(4 + dist)
-		end
-		
-		h = h + (0x28 - h)/(2 + dist)
-
---		if s ~= 0 then
---		s = s + (0xFF - s)/(2 + dist)
---		end
-		
-		l = l + (0xC0 - l)/(2 + dist)
-	end
-	--]]-- TEST
+	l = l + angle * 0xC - dist * 0x6
 	
-	-- shadows
-	l = angle and l - angle * l/0x8 or l
-
-	-- field of view
-	l = dist and l - dist * l/0x10 or l	
-
-	--TEST
---	l = dist and math.floor(l/8)*8 or l
-
 	local r, g, b = hsl(h, s, l)
 
-	gr.setColor(r, g, b, a)
+	gr.setColor(r, g, b, alpha)
 end

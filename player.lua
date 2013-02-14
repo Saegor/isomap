@@ -15,19 +15,17 @@ function player:check(gx, gy, gz)
 	gz == self.gz
 end
 
-function player:move(mx, my, mz)
+function player:move(x, y, z)
 
-	local dx, dy, dz =
-	self.gx + mx,
-	self.gy + my,
-	self.gz + mz
+	local xd, yd, zd =
+	self.gx + x,
+	self.gy + y,
+	self.gz + z
 
-	local dv = block_getValue(dx, dy, dz)
+	local vd = block_getValue(xd, yd, zd)
 
-	if dv == "empty" or dv == "water" then
+	if vd == "empty" or vd == "water" then
 	
-		self.gx = dx
-		self.gy = dy
-		self.gz = dz
+		self.gx, self.gy, self.gz = xd, yd, zd
 	end
 end

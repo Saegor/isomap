@@ -4,6 +4,10 @@ function love.load()
 
 --	fullscreen()
 	engine_init()
+
+--NEW ROTATION,
+	map_X, map_Y = 1, 1
+--NEW ROTATION
 end
 
 function love.update(dt)
