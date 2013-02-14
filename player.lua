@@ -17,6 +17,12 @@ end
 
 function player:move(x, y, z)
 
+--NEW ROTATION
+	x, y =
+	map_X ~= map_Y and map_Y * y or map_X * x,
+	map_X ~= map_Y and map_X * x or map_Y * y
+--NEW ROTATION
+
 	local xd, yd, zd =
 	self.gx + x,
 	self.gy + y,

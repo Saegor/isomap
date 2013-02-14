@@ -71,6 +71,7 @@ function face_setColor(value, dist, angle)
 	
 	local h, s, l, alpha = unpack(colors[value])
 
+	-- lighting
 	l = l + angle * 0xC - dist * 0x6
 	
 	local r, g, b = hsl(h, s, l)

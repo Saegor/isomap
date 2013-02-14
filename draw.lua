@@ -78,7 +78,7 @@ function block_draw(gx, gy, gz, v)
 			--back right
 			if v_bx ~= v then
 			
-				angle = -1
+				angle = - map_X * map_Y
 				dist = dist or getDist(gx, gy, gz)
 				
 				face_setColor(v, dist, angle)
@@ -88,7 +88,7 @@ function block_draw(gx, gy, gz, v)
 			--back left
 			if v_by ~= v then
 
-				angle = 1
+				angle = map_X * map_Y
 				dist = dist or getDist(gx, gy, gz)
 				
 				face_setColor(v, dist, angle)
@@ -109,7 +109,7 @@ function block_draw(gx, gy, gz, v)
 		--front right
 		if v_fx ~= v and block_getAlpha(v_fx) then
 
-			angle = 1
+			angle = map_X * map_Y
 			dist = dist or getDist(gx, gy, gz)
 
 			face_setColor(v, dist, angle)
@@ -119,7 +119,7 @@ function block_draw(gx, gy, gz, v)
 		--front left		
 		if v_fy ~= v and block_getAlpha(v_fy) then
 		
-			angle = -1
+			angle = - map_X * map_Y
 			dist = dist or getDist(gx, gy, gz)
 
 			face_setColor(v, dist, angle)
