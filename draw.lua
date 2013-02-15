@@ -21,18 +21,12 @@ function block_draw(gx, gy, gz, v)
 		-- values in front of v
 		local v_fz = block_getValue(gx, gy, gz + 1)
 
---NEW ROTATION
-		local v_fx, v_fy
+--NEW ROTATION 40%
+		local v_fx, v_fy =
+		block_getValue(gx, gy + map_X, gz),
+		block_getValue(gx + map_Y, gy , gz)
 
-		if map_X ~= map_Y then
-
-			v_fx = block_getValue(gx, gy + map_X, gz)
-			v_fy = block_getValue(gx + map_Y, gy , gz)
-		else
-
-			v_fx = block_getValue(gx + map_X, gy, gz)
-			v_fy = block_getValue(gx, gy + map_Y , gz)
-		end
+		if map_X == map_Y then v_fx, v_fy = v_fy, v_fx end
 -- NEW ROTATION
 		
 		-- water FX
@@ -61,39 +55,13 @@ function block_draw(gx, gy, gz, v)
 			-- values behind v (not hided if v is transparent)
 			local v_bz = block_getValue(gx, gy, gz - 1)
 
+--NEW ROTATION 40%
+			local v_bx, v_by =
+			block_getValue(gx, gy - map_X, gz),
+			block_getValue(gx - map_Y, gy, gz)
+			
+			if map_X == map_Y then v_bx, v_by = v_by, v_bx end
 --NEW ROTATION
-			local v_bx, v_by
-			
-			if map_X ~= map_Y then
-
-				v_bx = block_getValue(gx, gy - map_X, gz)
-				v_by = block_getValue(gx - map_Y, gy, gz)
-			else
-
-				v_bx = block_getValue(gx - map_X, gy, gz)
-				v_by = block_getValue(gx, gy - map_Y, gz)
-			end
---NEW ROTATION
-			
-			--back right
-			if v_bx ~= v then
-			
-				angle = - map_X * map_Y
-				dist = dist or getDist(gx, gy, gz)
-				
-				face_setColor(v, dist, angle)
-				face_draw(x3, y3, x4, y4, x8, y8, x7, y7)
-			end
-
-			--back left
-			if v_by ~= v then
-
-				angle = map_X * map_Y
-				dist = dist or getDist(gx, gy, gz)
-				
-				face_setColor(v, dist, angle)
-				face_draw(x4, y4, x1, y1, x5, y5, x8, y8)
-			end
 			
 			--back bottom
 			if v_bz ~= v then
@@ -104,12 +72,32 @@ function block_draw(gx, gy, gz, v)
 				face_setColor(v, dist, angle)			
 				face_draw(x1, y1, x2, y2, x3, y3, x4, y4)
 			end
+			
+			--back right
+			if v_bx ~= v then
+			
+				angle = map_X + map_Y/2
+				dist = dist or getDist(gx, gy, gz)
+				
+				face_setColor(v, dist, angle)
+				face_draw(x3, y3, x4, y4, x8, y8, x7, y7)
+			end
+
+			--back left
+			if v_by ~= v then
+
+				angle = map_Y - map_X/2
+				dist = dist or getDist(gx, gy, gz)
+				
+				face_setColor(v, dist, angle)
+				face_draw(x4, y4, x1, y1, x5, y5, x8, y8)
+			end
 		end
 
 		--front right
 		if v_fx ~= v and block_getAlpha(v_fx) then
 
-			angle = map_X * map_Y
+			angle = map_X + map_Y/2
 			dist = dist or getDist(gx, gy, gz)
 
 			face_setColor(v, dist, angle)
@@ -119,7 +107,7 @@ function block_draw(gx, gy, gz, v)
 		--front left		
 		if v_fy ~= v and block_getAlpha(v_fy) then
 		
-			angle = - map_X * map_Y
+			angle = map_Y - map_X/2
 			dist = dist or getDist(gx, gy, gz)
 
 			face_setColor(v, dist, angle)

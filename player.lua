@@ -17,10 +17,9 @@ end
 
 function player:move(x, y, z)
 
---NEW ROTATION
-	x, y =
-	map_X ~= map_Y and map_Y * y or map_X * x,
-	map_X ~= map_Y and map_X * x or map_Y * y
+--NEW ROTATION 60%
+	x, y = map_X * x, map_Y * y
+	if map_X ~= map_Y then x, y = y, x end
 --NEW ROTATION
 
 	local xd, yd, zd =

@@ -5,7 +5,7 @@ function love.load()
 --	fullscreen()
 	engine_init()
 
---NEW ROTATION
+--NEW ROTATION 80%
 	map_X, map_Y = 1, 1
 --NEW ROTATION
 end
