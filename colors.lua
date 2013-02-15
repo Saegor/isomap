@@ -5,7 +5,7 @@ colors = {
 	ground =
 	{0x20, 0x30, 0x60};
 	grass =
-	{0x50, 0x40, 0x70};
+	{0x50, 0x40, 0x60};
 	leaf =
 	{0x60, 0x40, 0x70};
 	stone =
@@ -17,7 +17,7 @@ colors = {
 	sky =
 	{0x80, 0x40, 0x60};
 	player =
-	{0x80, 0x60, 0x60};
+	{0x80, 0x40, 0x50};
 	unknown =
 	{0x00, 0xFF, 0x80, 0x80};
 }
@@ -71,9 +71,9 @@ function face_setColor(value, dist, angle)
 	
 	local h, s, l, alpha = unpack(colors[value])
 
-	-- lighting	
+	-- lighting
 	l = l * (1 - dist/0x10)
-	l = l * (1 + angle/0x8)
+	l = l * (1 + angle/0x4)
 
 	local r, g, b = hsl(h, s, l)
 

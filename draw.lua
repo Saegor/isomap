@@ -21,12 +21,12 @@ function block_draw(gx, gy, gz, v)
 		-- values in front of v
 		local v_fz = block_getValue(gx, gy, gz + 1)
 
---NEW ROTATION 40%
+--NEW ROTATION
 		local v_fx, v_fy =
-		block_getValue(gx, gy + map_X, gz),
-		block_getValue(gx + map_Y, gy , gz)
+		block_getValue(gx, gy + map_Y, gz),
+		block_getValue(gx + map_X, gy , gz)
 
-		if map_X == map_Y then v_fx, v_fy = v_fy, v_fx end
+		if map_Y == map_X then v_fx, v_fy = v_fy, v_fx end
 -- NEW ROTATION
 		
 		-- water FX
@@ -55,12 +55,12 @@ function block_draw(gx, gy, gz, v)
 			-- values behind v (not hided if v is transparent)
 			local v_bz = block_getValue(gx, gy, gz - 1)
 
---NEW ROTATION 40%
+--NEW ROTATION
 			local v_bx, v_by =
-			block_getValue(gx, gy - map_X, gz),
-			block_getValue(gx - map_Y, gy, gz)
+			block_getValue(gx, gy - map_Y, gz),
+			block_getValue(gx - map_X, gy, gz)
 			
-			if map_X == map_Y then v_bx, v_by = v_by, v_bx end
+			if map_Y == map_X then v_bx, v_by = v_by, v_bx end
 --NEW ROTATION
 			
 			--back bottom
@@ -75,8 +75,10 @@ function block_draw(gx, gy, gz, v)
 			
 			--back right
 			if v_bx ~= v then
-			
-				angle = map_X + map_Y/2
+
+--NEW ROTATION
+				angle = - map_Y - map_X/2
+--NEW ROTATION
 				dist = dist or getDist(gx, gy, gz)
 				
 				face_setColor(v, dist, angle)
@@ -86,7 +88,9 @@ function block_draw(gx, gy, gz, v)
 			--back left
 			if v_by ~= v then
 
-				angle = map_Y - map_X/2
+--NEW ROTATION
+				angle = - map_X + map_Y/2
+--NEW ROTATION
 				dist = dist or getDist(gx, gy, gz)
 				
 				face_setColor(v, dist, angle)
@@ -97,7 +101,9 @@ function block_draw(gx, gy, gz, v)
 		--front right
 		if v_fx ~= v and block_getAlpha(v_fx) then
 
-			angle = map_X + map_Y/2
+--NEW ROTATION
+			angle = map_Y + map_X/2
+--NEW ROTATION
 			dist = dist or getDist(gx, gy, gz)
 
 			face_setColor(v, dist, angle)
@@ -107,7 +113,9 @@ function block_draw(gx, gy, gz, v)
 		--front left		
 		if v_fy ~= v and block_getAlpha(v_fy) then
 		
-			angle = map_Y - map_X/2
+--NEW ROTATION
+			angle = map_X - map_Y/2
+--NEW ROTATION
 			dist = dist or getDist(gx, gy, gz)
 
 			face_setColor(v, dist, angle)

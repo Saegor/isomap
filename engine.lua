@@ -25,17 +25,16 @@ function engine_run()
 
 	for gz in ipairs(map) do
 
---NEW ROTATION 50%
-
+--NEW ROTATION
 		local min_gy, max_gy = 1, #map[gz]
-		if map_X == -1 then min_gy, max_gy = max_gy, min_gy end
+		if map_Y == -1 then min_gy, max_gy = max_gy, min_gy end
 
-		for gy = min_gy, max_gy, map_X do
+		for gy = min_gy, max_gy, map_Y do
 
 			local min_gx, max_gx = 1, #map[gz][gy]
-			if map_Y == -1 then min_gx, max_gx = max_gx, min_gx end
+			if map_X == -1 then min_gx, max_gx = max_gx, min_gx end
 
-			for gx = min_gx, max_gx, map_Y do
+			for gx = min_gx, max_gx, map_X do
 
 				v = map[gz][gy][gx]
 --NEW ROTATION
@@ -116,9 +115,9 @@ end
 function axono(x, y, z)
 
 	return
---NEW ROTATION 80%
-	(map_X * x - map_Y * y) * tile_w,
-	(map_X * y + map_Y * x) * tile_h - z * tile_z
+--NEW ROTATION
+	(map_Y * x - map_X * y) * tile_w,
+	(map_Y * y + map_X * x) * tile_h - z * tile_z
 --NEW ROTATION
 end
 

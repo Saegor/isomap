@@ -35,12 +35,12 @@ end
 
 function map_rotate(cw)
 
---NEW ROTATION 60%
+--NEW ROTATION
 	cw = cw and 1 or -1
 
-	map_X, map_Y =
-	map_Y * - cw,
-	map_X * cw 
+	map_Y, map_X =
+	map_X * - cw,
+	map_Y * cw 
 --NEW ROTATION
 end
 
