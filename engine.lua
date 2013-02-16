@@ -26,13 +26,23 @@ function engine_run()
 	for gz in ipairs(map) do
 
 --NEW ROTATION
-		local min_gy, max_gy = 1, #map[gz]
-		if map_Y == -1 then min_gy, max_gy = max_gy, min_gy end
+		local min_gy = 1
+		local max_gy = #map[gz]
+		
+		if map_Y == -1 then
+		
+			min_gy, max_gy = max_gy, min_gy
+		end
 
 		for gy = min_gy, max_gy, map_Y do
 
-			local min_gx, max_gx = 1, #map[gz][gy]
-			if map_X == -1 then min_gx, max_gx = max_gx, min_gx end
+			local min_gx = 1
+			local max_gx = #map[gz][gy]
+
+			if map_X == -1 then
+			
+				min_gx, max_gx = max_gx, min_gx
+			end
 
 			for gx = min_gx, max_gx, map_X do
 

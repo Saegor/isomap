@@ -18,8 +18,7 @@ end
 function player:move(x, y, z)
 
 --NEW ROTATION
-x, y = x * map_X, y * map_Y
-if map_Y ~= map_X then x, y = -y, -x end
+x, y = map_corr(x, y)
 --NEW ROTATION
 
 	local xd, yd, zd =

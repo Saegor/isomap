@@ -6,7 +6,8 @@ function love.load()
 	engine_init()
 
 --NEW ROTATION
-	map_X, map_Y = 1, 1
+	map_X = 1
+	map_Y = 1
 --NEW ROTATION
 end
 

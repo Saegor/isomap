@@ -1,12 +1,12 @@
 function block_draw(gx, gy, gz, v)
-	
-	-- check if player must be drawn instead of block
+
+	-- check if player must be drawn instead of our block
 	v = player:check(gx, gy, gz) and "player" or v
 
 	-- abort if there is no block to draw
 	if not v or v == "empty" then return end
 
-	-- get corners coordinates
+	-- get block corners coordinates
 	local
 	x1, y1, x2, y2, x3, y3, x4, y4,
 	x5, y5, x6, y6, x7, y7, x8, y8 =
@@ -22,13 +22,13 @@ function block_draw(gx, gy, gz, v)
 		local v_fz = block_getValue(gx, gy, gz + 1)
 
 --NEW ROTATION
-		local v_fx, v_fy =
-		block_getValue(gx, gy + map_Y, gz),
-		block_getValue(gx + map_X, gy , gz)
+		local frx, fry = map_corr(1, 0)
+		local flx, fly = map_corr(0, 1)
 
-		if map_Y == map_X then v_fx, v_fy = v_fy, v_fx end
+		local v_fr = block_getValue(gx + frx, gy + fry, gz)
+		local v_fl = block_getValue(gx + flx, gy + fly, gz)
 -- NEW ROTATION
-		
+
 		-- water FX
 		if v == "water"	and v_fz == "empty" then
 
@@ -49,18 +49,18 @@ function block_draw(gx, gy, gz, v)
 			y8 = y8 + lz - wz
 		end
 
-		--if transparent, draw back faces
+		--if the block is transparent, draw back faces
 		if block_getAlpha(v) then
 
-			-- values behind v (not hided if v is transparent)
+			-- store values of the blocks behind our block
 			local v_bz = block_getValue(gx, gy, gz - 1)
-
---NEW ROTATION
-			local v_bx, v_by =
-			block_getValue(gx, gy - map_Y, gz),
-			block_getValue(gx - map_X, gy, gz)
 			
-			if map_Y == map_X then v_bx, v_by = v_by, v_bx end
+--NEW ROTATION
+		local brx, bry = map_corr(-1, 0)
+		local blx, bly = map_corr(0, -1)
+
+		local v_br = block_getValue(gx + brx, gy + bry, gz)
+		local v_bl = block_getValue(gx + blx, gy + bly, gz)
 --NEW ROTATION
 			
 			--back bottom
@@ -74,7 +74,7 @@ function block_draw(gx, gy, gz, v)
 			end
 			
 			--back right
-			if v_bx ~= v then
+			if v_br ~= v then
 
 --NEW ROTATION
 				angle = - map_Y - map_X/2
@@ -86,7 +86,7 @@ function block_draw(gx, gy, gz, v)
 			end
 
 			--back left
-			if v_by ~= v then
+			if v_bl ~= v then
 
 --NEW ROTATION
 				angle = - map_X + map_Y/2
@@ -99,7 +99,7 @@ function block_draw(gx, gy, gz, v)
 		end
 
 		--front right
-		if v_fx ~= v and block_getAlpha(v_fx) then
+		if v_fr ~= v and block_getAlpha(v_fr) then
 
 --NEW ROTATION
 			angle = map_Y + map_X/2
@@ -111,7 +111,7 @@ function block_draw(gx, gy, gz, v)
 		end
 
 		--front left		
-		if v_fy ~= v and block_getAlpha(v_fy) then
+		if v_fl ~= v and block_getAlpha(v_fl) then
 		
 --NEW ROTATION
 			angle = map_X - map_Y/2

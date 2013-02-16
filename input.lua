@@ -91,11 +91,11 @@ function input_keypressed(k)
 	
 	if k == "j" then
 	
-		map_rotate()
+		map_rotate(-1)
 	end
 
 	if k == "k" then
 	
-		map_rotate(true)
+		map_rotate(1)
 	end	
 end

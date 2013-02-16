@@ -33,14 +33,10 @@ function map_load(map_string)
 	return map
 end
 
-function map_rotate(cw)
+function map_rotate(dir)
 
 --NEW ROTATION
-	cw = cw and 1 or -1
-
-	map_Y, map_X =
-	map_X * - cw,
-	map_Y * cw 
+	map_Y, map_X = map_X * - dir, map_Y * dir
 --NEW ROTATION
 end
 
@@ -55,4 +51,11 @@ function map_converse(char)
 	char == "~" and "water" or
 	char == "$" and "wood" or
 	"unknown"
+end
+
+function map_corr(x, y)
+	
+	return
+	x * (map_X + map_Y)/2 + y * (map_X - map_Y)/2,
+	y * (map_Y + map_X)/2 + x * (map_Y - map_X)/2
 end
