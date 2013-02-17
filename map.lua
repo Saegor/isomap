@@ -36,7 +36,7 @@ end
 function map_rotate(dir)
 
 --NEW ROTATION
-	map_Y, map_X = map_X * - dir, map_Y * dir
+	map_Y, map_X = - dir * map_X, dir * map_Y
 --NEW ROTATION
 end
 
@@ -53,9 +53,11 @@ function map_converse(char)
 	"unknown"
 end
 
+--NEW ROTATION
 function map_corr(x, y)
 	
 	return
 	x * (map_X + map_Y)/2 + y * (map_X - map_Y)/2,
 	y * (map_Y + map_X)/2 + x * (map_Y - map_X)/2
 end
+--NEW ROTATION

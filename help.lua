@@ -33,7 +33,7 @@ function print_help()
 		gr.print(cmd_msg[2], 80, 20)
 		
 	else
-		gr.setColor(0xE0, 0xE0, 0xE0)
+		gr.setColor(0xA0, 0xA0, 0xA0)
 		gr.print(ti.getFPS() ..
 		" fps\npress tab", 20, 20)
 	end

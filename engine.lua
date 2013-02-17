@@ -1,7 +1,7 @@
 function engine_init()
 
 	-- set background
-	gr.setBackgroundColor(hsl(unpack(colors.sky)))
+	gr.setBackgroundColor(hsl(unpack(colors.sky_night)))
 
 	-- set tile size
 	base_w = 0x20 --* math.sqrt(3)/2

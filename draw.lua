@@ -38,7 +38,7 @@ function block_draw(gx, gy, gz, v)
 			-- waves (merci darky, ca pulse sec)
 			local wz = lz/4 * math.sin(
 
-				4 * love.timer.getTime() % (2 * math.pi) +
+				4 * ti.getTime() % (2 * math.pi) +
 				(gx % 2 + gy % 2) % 2 * math.pi
 			)
 
